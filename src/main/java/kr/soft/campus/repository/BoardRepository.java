@@ -38,8 +38,7 @@ public class BoardRepository {
      * @return
      */
     public Board findById(long id) {
-        return em.createQuery("select b from Board b" +
-        " where b.deleteYn = 'N' ", Board.class).getSingleResult();
+        return em.find(Board.class, id);
     }
 
     /**
@@ -57,6 +56,13 @@ public class BoardRepository {
     public void delete(long id) {
         em.createQuery("update Board b set b.deleteYn='Y' where b.id=:id")
                 .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    @Transactional
+    public void boardGoodUp(long idx) {
+        em.createNamedQuery("Board.goodUp")
+                .setParameter("id", idx)
                 .executeUpdate();
     }
 }

@@ -7,6 +7,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
+@NamedQuery(
+        name = "Board.goodUp",
+        query = "update Board b SET b.good = b.good+1 WHERE b.idx = :id"
+)
 public class Board {
 
     @Id
@@ -20,6 +24,9 @@ public class Board {
 
     @Column(name="delete_yn", length = 1)
     private String deleteYn = "N";          //삭제 여부
+
+    @Column
+    private int good;                       //좋아요
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)

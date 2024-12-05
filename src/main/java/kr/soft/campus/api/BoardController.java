@@ -37,12 +37,15 @@ public class BoardController {
      * memberId: Login Id
      */
     @PostMapping("/regist")
-    public void regist(@RequestBody BoardRegistReq req) {
+    public ResponseEntity<ResponseData> regist(@RequestBody BoardRegistReq req) {
+        ResponseData responseData = new ResponseData();
         Board board = new Board();
         board.setContent(req.getContent());
         board.setTitle(req.getTitle());
 
         boardService.regist(req.memberId, board);
+
+        return ResponseEntity.ok(responseData);
     }
 
     /**
@@ -66,7 +69,7 @@ public class BoardController {
         return ResponseEntity.ok(responseData);
     }
 
-    @GetMapping("/detail")
+    @GetMapping("/find")
     public ResponseEntity<?> find(@RequestParam(name = "boardId") long boardId) {
         ResponseData responseData = new ResponseData();
         Board board = boardRepository.findById(boardId);
@@ -92,7 +95,8 @@ public class BoardController {
     }
 
     @PostMapping("/remove")
-    public ResponseEntity<?> remove(@RequestBody BoardDeleteReq req) {
+    public ResponseEntity<?> remove(@RequestBody BoardIdReq
+ req) {
         ResponseData responseData = new ResponseData();
         logger.info("req: {}", req.getBoardId());
         if(!boardService.remove(req.getBoardId())) {
@@ -102,9 +106,23 @@ public class BoardController {
 
         return ResponseEntity.ok(responseData);
     }
+    
+    @PostMapping("/good")
+    public ResponseEntity<ResponseData> goodUp(@RequestBody BoardIdReq req) {
+        ResponseData responseData = new ResponseData();
+
+        logger.info("req: {}", req.getBoardId());
+        if(!boardService.boardGood(req.getBoardId())) {
+            responseData.setCode("500");
+            responseData.setMsg("null");
+        }
+
+        return ResponseEntity.ok(responseData);
+    }
 
     @Data
-    static class BoardDeleteReq {
+    static class BoardIdReq
+ {
         private long boardId;
     }
 
@@ -121,11 +139,13 @@ public class BoardController {
         private String title;
         private String content;
         private String memberId;
+        private int boardGood;
         private LocalDateTime createdAt;
 
         BoardDetailRes(Board board) {
             this.title = board.getTitle();
             this.content = board.getContent();
+            this.boardGood = board.getGood();
             this.memberId = board.getCreatedBy().getUserId();
             this.createdAt = board.getCreated();
         }
@@ -136,12 +156,16 @@ public class BoardController {
      */
     @Data
     static class BoardListRes {
+        private long boardIdx;
         private String title;
         private String memberId;
+        private int boardGood;
         private LocalDateTime createdAt;
 
         BoardListRes(Board board) {
+            this.boardIdx = board.getIdx();
             this.title = board.getTitle();
+            this.boardGood = board.getGood();
             this.memberId = board.getCreatedBy().getUserId();
             this.createdAt = board.getCreated();
         }

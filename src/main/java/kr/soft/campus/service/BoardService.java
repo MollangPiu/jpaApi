@@ -64,4 +64,14 @@ public class BoardService {
 
         return true;
     }
+
+    @Transactional
+    public boolean boardGood(long idx) {
+        logger.info("modify");
+        if(boardRepository.findById(idx) == null) {
+            return false;
+        }
+        Board detail = boardRepository.findById(idx);
+        return true;
+    }
 }
