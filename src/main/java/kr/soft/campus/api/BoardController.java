@@ -53,7 +53,10 @@ public class BoardController {
      * @return
      */
     @GetMapping("/list")
-    public ResponseEntity<?> list() {
+    public ResponseEntity<?> list(
+            @RequestParam(value = "keyword", required = false, defaultValue = "") String keyWord,
+            @RequestParam(value = "createBy", required = false, defaultValue = "") String createBy
+    ) {
         ResponseData responseData = new ResponseData();
 
         List<BoardListRes> lists = boardRepository.findAll().stream().map(board ->
