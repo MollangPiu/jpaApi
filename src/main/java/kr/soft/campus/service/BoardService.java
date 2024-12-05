@@ -76,7 +76,8 @@ public class BoardService {
         if(boardRepository.findById(idx) == null) {
             return false;
         }
-        Board detail = boardRepository.findById(idx);
+
+        boardRepository.boardGoodUp(idx);
         return true;
     }
 
