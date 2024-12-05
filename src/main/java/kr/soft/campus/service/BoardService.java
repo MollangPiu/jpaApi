@@ -52,6 +52,7 @@ public class BoardService {
 
         Board detail = boardRepository.findById(board.getIdx());
 
+        board.setGood(detail.getGood());
         board.setCreatedBy(detail.getCreatedBy());  //생성 자
         board.setCreated(detail.getCreated());      //생성 날짜
         board.setModifiedBy(member);
