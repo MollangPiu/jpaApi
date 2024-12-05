@@ -2,6 +2,7 @@ package kr.soft.campus.service;
 
 import jakarta.transaction.Transactional;
 import kr.soft.campus.domain.Board;
+import kr.soft.campus.domain.Item;
 import kr.soft.campus.domain.Member;
 import kr.soft.campus.repository.BoardRepository;
 import kr.soft.campus.repository.MemberRepository;
@@ -9,6 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class BoardService {
@@ -73,5 +78,34 @@ public class BoardService {
         }
         Board detail = boardRepository.findById(idx);
         return true;
+    }
+
+    public List<Board> findSearch(String keyword, String created) {
+        List<Board> boards = boardRepository.findAll();
+        boards = search(boards, keyword, created); //seach
+        return boards;
+    }
+
+    /**
+     * 게시판 검색하기
+     * @param boards
+     * @param keyword
+     * @param created
+     * @return
+     */
+    public List<Board> search(List<Board> boards, String keyword, String created) {
+        Stream<Board> stream = boards.stream();
+
+        if (keyword != null && !keyword.isEmpty()) {
+            String finalKeyword = keyword.toLowerCase();
+            stream = stream.filter(i -> i.getTitle().toLowerCase().contains(finalKeyword));
+        }
+
+        if (created != null && !created.isEmpty()) {
+            String finalKeyword = keyword.toLowerCase();
+            stream = stream.filter(i -> i.getCreatedBy().getUserId().toLowerCase().contains(finalKeyword));
+        }
+
+        return stream.collect(Collectors.toList());
     }
 }

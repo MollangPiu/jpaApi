@@ -55,11 +55,11 @@ public class BoardController {
     @GetMapping("/list")
     public ResponseEntity<?> list(
             @RequestParam(value = "keyword", required = false, defaultValue = "") String keyWord,
-            @RequestParam(value = "createBy", required = false, defaultValue = "") String createBy
+            @RequestParam(value = "created", required = false, defaultValue = "") String created
     ) {
         ResponseData responseData = new ResponseData();
 
-        List<BoardListRes> lists = boardRepository.findAll().stream().map(board ->
+        List<BoardListRes> lists = boardService.findSearch(keyWord, created).stream().map(board ->
             new BoardListRes(board)
         )
         .collect(toList());
