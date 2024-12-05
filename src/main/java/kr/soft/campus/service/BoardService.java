@@ -104,7 +104,7 @@ public class BoardService {
         }
 
         if (created != null && !created.isEmpty()) {
-            String finalKeyword = keyword.toLowerCase();
+            String finalKeyword = created.toLowerCase();
             stream = stream.filter(i -> i.getCreatedBy().getUserId().toLowerCase().contains(finalKeyword));
         }
 
