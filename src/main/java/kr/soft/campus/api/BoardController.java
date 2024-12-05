@@ -66,7 +66,7 @@ public class BoardController {
 
         responseData.setData(lists);
         if(lists == null || lists.size() == 0) {
-            responseData.setCode("500");
+            responseData.setMsg("null");
         }
 
         return ResponseEntity.ok(responseData);
