@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -56,6 +57,7 @@ public class BoardService {
         board.setCreatedBy(detail.getCreatedBy());  //생성 자
         board.setCreated(detail.getCreated());      //생성 날짜
         board.setModifiedBy(member);
+        board.setModified(LocalDateTime.now());
         boardRepository.update(board);
     }
 
