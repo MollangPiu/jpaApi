@@ -103,7 +103,7 @@ public class BoardController {
         ResponseData responseData = new ResponseData();
         logger.info("req: {}", req.getBoardId());
         if(!boardService.remove(req.getBoardId())) {
-            responseData.setCode("500");
+            responseData.setCode(500);
             responseData.setMsg("null");
         }
 
@@ -116,7 +116,7 @@ public class BoardController {
 
         logger.info("req: {}", req.getBoardId());
         if(!boardService.boardGood(req.getBoardId())) {
-            responseData.setCode("500");
+            responseData.setCode(500);
             responseData.setMsg("null");
         }
 

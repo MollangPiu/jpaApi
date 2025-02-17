@@ -36,7 +36,7 @@ public class ItemController {
         return ResponseEntity.ok(data);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/list")
     public ResponseEntity<ResponseData> getAll(
             @RequestParam(value = "keyword", required = false, defaultValue = "") String keyWord,
             @RequestParam(value = "categoryIdx", required = false, defaultValue = "") String category

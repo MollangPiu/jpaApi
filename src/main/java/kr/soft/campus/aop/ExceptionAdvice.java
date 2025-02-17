@@ -12,7 +12,7 @@ public class ExceptionAdvice {
     public ResponseEntity<ResponseData> exception(Exception e) {
         e.printStackTrace();
         ResponseData responseData = new ResponseData();
-        responseData.setCode("500");
+        responseData.setCode(500);
         responseData.setMsg("error");
         return ResponseEntity.status(500).body(responseData);
     }

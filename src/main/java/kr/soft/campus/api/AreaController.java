@@ -47,7 +47,7 @@ public class AreaController {
         return responseData;
     }
 
-    @GetMapping("/byId")
+    @GetMapping("/findById")
     public ResponseData byId(@RequestParam("id") long id) {
         ResponseData responseData = new ResponseData();
         AreaListRes area = new AreaListRes(areaRepository.findById(id));
@@ -60,11 +60,9 @@ public class AreaController {
     static class AreaListRes {
         private long idx;
         private String areaName;
-        private String areaCode;
         public AreaListRes(Area area) {
             this.idx = area.getIdx();
             this.areaName = area.getAreaName();
-            this.areaCode = area.getAreaCode();
         }
     }
 }

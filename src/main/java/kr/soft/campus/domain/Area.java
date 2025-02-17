@@ -16,8 +16,6 @@ public class Area {
 
     private String areaName;
 
-    private String areaCode;
-
     @OneToMany(mappedBy = "area")
     private List<Member> members = new ArrayList<>();
 }
